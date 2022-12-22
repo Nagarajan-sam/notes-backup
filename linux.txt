@@ -184,6 +184,7 @@ cp -r python devops (cpyng one dir to other dir )
 
 mv (is the move cmnd is used to move a file r dir or we can rename)
 cp *.txt (dir r file name)--> is used to copy all the text file to another dir r file.
+cp *.txt 
 
 file -->cmd is used to find which type of file is this.should done in home dir
   file (dirname/txt files)
