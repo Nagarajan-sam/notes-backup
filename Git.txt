@@ -1,0 +1,24 @@
+GIT: Done in aws server.
+  yum update
+  137  sudo yum update
+  138  git --version
+  139  sudo yum install git
+  140  git --versiom
+  141  git --version
+  142  mkdir sample
+  143  cd sample
+  144  ls
+  145  touch sample.txt
+  146  cat sample.txt
+  147  cat > sample.txt
+  148  ls
+  149  cat sample.txt
+  150  cd ..
+  151  ls
+  152  cd sample
+  153  git init
+  154  git add sample.txt
+  155  git commit -m "sample one"
+  156  git branch
+  157  git remote add origin https://github.com/Gokulgemini/sample.git
+  158  git push origin master

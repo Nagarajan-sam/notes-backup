@@ -1,0 +1,315 @@
+if we want to work with linux server ,ssh tools and ftp tools are the prereq one.
+for sending the file r downloading the file from server tat time we can use the ftp tools.
+The ftp tools are  1.winscp and 2.filezilla
+For connecting the server we need details like , 1.ipaddress/hostname 2.username and password
+
+In windows we used to call main drive as c Driver, LIKE CDRIVE IN LINUX IT CALLED AS ROOT DIRECTORY (\) IT WILL HAVE MANY FILES INSIDE THAT ROOT DR
+
+A--Rootdirectory or parent directory,it willl have many sub directories.
+home directory---> is like c drive in user,it have users information.
+for eg we have 4 user means for every user it will create a separate dir with their names
+QN-- how can we find how many users are their ,,by gng to home and ls the dir
+
+UNDER ROOT DIR WILL HAVE SOME SUB DIR (below are the sub dir of root dir)
+1.BIN 
+it contain all binary file ,for all and every each cmnd,will have bin file (eg ls,cmnd ... so that every commands will have the sep bin files)
+
+2.S BIN-- SYSTEM BINARIES
+
+(it also contains some binary files ),like useradd, userdel,shutdown etc.. 
+ 
+DIFF TYPES OF USERA IN LINUX:
+1.ROOT USER /super user /admn user --> While installling the linux tat timesitself rootuser will create
+                Root user can create a n num of users,bt it have only one root user. all the preveilage have the root user
+
+2.NORMAL USER --> have n number of user created by the root user(all the details of user in home dir)
+
+3.SYSTEM USER --> while installing a softwares like jenkins , docker tat time it will have a sysytem user
+                  while installing jenkins  that time the software is going to create a user called a jenkins ( all the details of system user
+                  will be in the {shadow and the passwd files.}
+QN DIFF BW BIN AND SBIN.
+what ever the binaries which are available in the bin and sbin can be accessed by the ->root user ,,,, normal user and the system user can access only the bin files.
+
+3.ETC Dir --> It contains all the config files (like sudoers ,sshdconfig,profile,shadow,group,password,motd(msg of the day)while logging it will have a welcome msg.
+           [shadows and passwd files have the all the info abt the normal user,root user,and system user.
+
+4.Lib Dir (Library) --->all the libraries file will stored here (os lib also will stored here only)
+
+5.proc DIR(process) --->1. if we executing the commands in shell scrpit ,r if we executing any commands will have process id , those
+                     process id infor are avail and stored here only.
+                     2.Along with this we have 2 more files CPU INFO and MEMINFO...cpu info (will have cpu information)
+                     Mem info(will have memory information)
+
+6.opt Dir--> by defaulty it will be empty, in this dir we are gng to install the softwares,
+             in win if we install some sw means it will go dir to the PROGRAM FILES s,imlinux it will be as opt
+             All the 3rd parties sw are gng to install in the optDIR ,by defaulty as a normal user dont have to access to this opt dir.we need to be a super user
+
+7.Temp Dir-->(it is the temporary directory, can be accesd by all the user) for eg there are 2 usrs rock and mock,rock home dir is home/ROCK
+             mockhome dir is -->home/mock , rock want to send his filename called devops.txt how he will send (user cannt have permission
+             to reach another persion) so copy the file in temp ,temp can be accesd by all user so mock will copy via the temp file
+             and he will paste in this .
+8.var dir-->(our system logs will be in this dir)
+9.DEV Dir (devices)--> it contains info abt the device eg one external device (printer r harddisk) is connected to the server means it will ahave that devices info.
+--------------------------------------------------------------------******--------------------------------------------------------
+                                                            LINUX COMMENTS
+mkdir test --> it will create a new dir called test
+mkdir -v devops--> it will display that the directory is created (-v = purpose)
+mkdir -p devops/linux/shell/tomcat/sonarcube -->it will create all the directories in a single cmd,1st it will check for the parent dir 
+mkdir -vp devops/linux/shell/tomcar/sonarcube -->it will create all dir and it will display tat we r created a dir
+mkdir -m 700 python--> it will create a python dir with some custom permission ,r else it will be in default permission
+uname - it will show wt os we are using
+pwd --> it show present working dir
+ls -->it will list the file r dir ,, ls devops/---> it will list what is inside the devops dir
+touch devops.txt-->it will create a file with a name of devops.
+ls -l(long list)--> it will display the full details abt the particular filename r dir 
+                    if it is a dir means it will be -d for (dir)
+                    if it is a file means it is gng to start with - for (file)
+{drwxrwxr-x 3    ec2-user  ec2-user 19       Dec 11 11:51 devops
+permision  link  usrname  grpname  filesize   time
+-rw-rw-r-- 1 ec2-user ec2-user  0       Dec 11 11:51 devops.txt}
+-------- --> which means no permission
+-x ---->executable one
+ls -la (a=all)---> it displays all the hiddenfiles along with the dir and files.
+sudo su -      ---->is used to switch as a root user.
+exit r sudo su ec2-user--> it back to the normal user.
+{ls -l -->it will show our data memory in numb
+ls -lh (h= human readable)-->it will disply the data in kb r mb}
+ls -lt(last time) ---> it will list the dir and file name in according to the time we created the file nd dir (it will be in ascending order)
+ls -ltr(r = reverse) ---> it will display according to the priority what we created first along with the time 
+
+what is Inode---> it is data structure ,it can store the file/dir info ,,,, the info contains 1.permission, 2.grp name ,3.links, 4.ownername, 5.timestamp,6.size
+ls -li   ---> Inode it contains the number as we cant able to remem tat so we can call using file name r the dir name.
+             os can access using tat inode to access the file r dir ,we dont use tat inode
+cd (change dir)--> i am in a home user wanto go devops dir means using this cd devops i can access this.
+cd devops/Ltab/stab --> directly it will go the sonarcube dir
+cd .. --> onelevel up (the dir comes backward 1 step from sonarcube to tomcat)
+cd ../.. two level up --> cd ../../.. -->three level up
+cd ~ or cd --> it will take to user home dir
+cd - ---> it will take to the previous dir from the home user dir
+
+rmdir ---> it will delete only the empty dir
+rm -rf devops ---> (remove forcefully) ---> it will delete all the sub dir 1st
+rm -f devops.txt---> is used to delete the files.
+
+
+touch devops.txt--> is used to create a empty files
+vi devops.txt ---> to update r to write some data to a file 
+cat devops.txt-->  is used to view the content of the file
+touch devops.txt--> 1st it will check for the existing file ,if it is existed it will update only the timestamp,
+                    or it will create a new txt file.
+
+diff bw sudo su - and sudo su ---> sudo su - --> it will switch from normal user to the switch user and IT WILL POINT TO THE ROOT HOMEDIR
+                                                 AND IT WILL LOAD ROOT USER CONFIGURATION.
+                                  SUDO SU ---> IT WILL SWITCH TO THE ROOT USER AND POINT OUT THE CURRENT DIR.
+------------------------------------------------*****---------------------------------------------------------------------------------------
+HOW TO FIND THE FILE:
+find . -type f ----> in present wrkng dir in will find the how many files are there.
+find . -type f -empty ---> it tells r (gng to search) in present wrkng dir how many epmty files are there.
+find ~ -type f -empty ---> it tells in home dir it will say how many empty files are there. 
+find / -type f -empty  ---> it will search in root dir that how many epmty file r there.
+
+HOW TO FIND THE DIR :
+find . -type d -empty--> in pws it will find how many empty dir are available.
+
+While creating a file r dir it will have default permission ,the defaut permission is setting depends on  UMASK values r (user mask)
+THE USER MASK VALUE IS DIFFERS BY ROOT USER AND THE NORMAL USER,
+DEFAULT ROOT USER VALUE - 0022
+DEFAULT NORMAL USER VALUE -0002     both are default values setting by the os.
+Umask- it will display the values
+we can able to change the umask values by -->umask 0222 it will overwrite the permission.
+
+A.IN root user ,if we create a dir  or files means it will minus the base permission value and the default root value
+   1.Base permission for dir --->      0777
+   default permission for root user--> 0022                                                              0755
+                                       -----
+                                       0755 ---> this is the default dir perssion in root user.
+  2.Base permission for file --->    0666
+    default permission for root-->   0022                                                                0644
+                                    ---------
+                                     0644  --> this is default file per in root user
+
+B.IN nor user ,if we create a dir means it will minus the base permission value and the default root value
+  1. Base permission for dir --->        0777
+   default permission for root user-->   0002                                                           0775  
+                                         -----
+                                         0775 ---> this is the default dir perssion in normal user.
+  2.Base permission for file --->    0666
+    default permission for root-->   0002
+                                    ---------                                                           0664
+                                     0664  --> this is default file per in root user
+
+read = 4
+write = 2   -->  775--> 7- user 7-group 5-others    --->700
+exe = 1     ---> rwx rwx r-x                            rwx --- ---
+
+we can change the umask value,after we relogin again it will set a deffault umask value ,,bt if we wANT change permanently means
+/home/gokul/
+~.bash_profile                       ----------> this is applicable only for the gokul user 
+here we can add umask 0222
+
+/etc/profile/
+here add (umask 0222)              --->this is  applicable for all the user.
+
+------------------prac
+ls -l (our all file will be there)
+now if we do--> umask 222--> changing the umask value
+now--> umask (it will show the umask value as 222)
+now if we create the new file means it will have only the newly created umask value,bt it wont distrub previous one files nd dir
+ umask --> based on the permission only umask is going to set.
+
+--------------------------
+top -- our current session wont be inactive. by pressing ctrl c it will stop and we an can continue our work.
+chmod --->using this cmnd we can able to change file permission.
+       syntax---> chmod permissions dirname/filename
+
+chmod 777 Devops --> it will chnage only for the parent dir not for sub dir.
+Chmod -R 777 Devops --> it will change the perm for all sub dir.
+touch Devops/linux/test.txt--> after assinging per it will create a dir
+GIVING PERMISSION VIA ALPHABETICAL 
+chmod ugo +r test.txt
+chmod ugo +w test.txt
+chmod ugo +x test.txt
+chmod ugo -rwx test.txt ---> is used to remove all the permission.
+741 -all acces user for all ,read access for group,excute access for others.
+ chmod u+rwx,g+r,o+x.
+-wx-wx-wx --> can we enter the text in this file, the ans is no bcz we dont have read acces, without that we cant able to do nthg.
+chown root file r dirname (is used t0 change the owner r user name, bt we should be in roo
+chgrp wheel test.txt(file r dir name)-->is used to change the grp name,bt the user should be in our grp.(wheel is the predefined grp in linux)
+chown ec2-user:ec2-user test.txt (is used to creata a owner name nd the grp name together)
+--------------------------------------------------xxxxxxx--------------------------------------------------------------------------------------------
+cp(copy)  --->cpying the file or dir from the one file dir to othrt file r dir.
+cp fn/dirn dirname
+cp test.txt devops 
+cp -r python devops (cpyng one dir to other dir )
+
+mv (is the move cmnd is used to move a file r dir or we can rename)
+cp *.txt (dir r file name)--> is used to copy all the text file to another dir r file.
+cp *.txt 
+
+file -->cmd is used to find which type of file is this.should done in home dir
+  file (dirname/txt files)
+eg file gv/python __> it shows wt types of file is python.
+
+wc filename ---> is tells how many lines,words,and bytes r char in the file.
+wc -l filename --> it tells about how many line are there in the file
+wc -w filenname --> it tells about how many words are there in the file
+wc -c filename --> it tells about how many bytes r data are there in the file.
+
+ln--> it will create a link between a file 
+    opt/flipkart/flipkart.log ----->normal user want to see the logfile of flipkart nuser dont have permission
+                                    to acces so cpy this in to tmp file.
+  cp opt/flipkart/flipkart.log /tmp/ ---> here we cant able to see the updated log file so create a link to see the regular log.
+  ln /opt/flipkart/flipkart.log /tmp/lntest.txt ----> here we can see all the current regular updated logs here.(is called hardlink
+                                                                                                             have same features & properties)
+In hardlink what are the files we have in main files will have the copy of ln file,so the harddisk will get affect.
+if we have a n number of hardlink our harddisk capacity will be more so gng to SOFTLINK.
+if we delete the original file we can able to access the haardlinked file
+INODE:
+-----
+inode also same as the hard link
+
+SOFTLINK:---->i it will create a shortcut of the linked files so the mem size will be low.
+ln -s test.txt lnsoft.txt---> for creating the soft lin
+
+DIFF BW HARD AND SOFT LINK:
+HARDLINK                                                                                              SOFTLINK
+*What are the files we have in mainfiles it will have  | they dont have the same properties of the main files bt they have  
+the same properies in linkfiles                        |            create a shortcut files
+**memory size is high                                  | memsize is very low
+$IF we delete a mainfile we can able to access the     |$ if we delete a mainfile we cant able to access the main files.
+linked files                                           |
+
+
+TEXT EDITOR COMMAND:
+ VI and the VIM are diff editor ,coomparing to vi ,vim have a spl feature.
+
+vi python.txt---> if it is not available it is gng to open a file in command mode ,in cmnd mode we can't able to edit so press I
+:wq! -----> write(save) and quit
+:q!-----> without save quit
+:q---> already in the cmnd mode so no need to press esc
+
+vim and nano wont we available so ssudo yum install vim nano -y
+ if we want to list the line number --->:set nu -->set number
+                                        :set nonu-->disabling the line numbers
+/python ----->in vim text it will highlight with the word python
+:11  ---> it will highlight the line number 11
+
+NANO EDITOR:
+ ctrl+o ---->save
+ ctrl+x ---->exit
+---------------------------------------------------------------------------------------------------------------------------------
+                                              TEXT READING/DISPLAY COMMANDS
+echo ----> is used to print the output.
+cat --> to see the content of the file.
+cat -n file name (is used to view file with the line number)
+head filename -->(is used to view the first 10 line of the file)
+head -n 25 filename -->(is used to view the 1st 25 line of the file)
+tail filename --->(is used to view the last 10 line of the file)
+tail -n 25 filename--->(is used to view the last 25 line of the file)
+sed '30 p' filename -->(is used to print the particular line of the file)
+sed '30,50 p filename--> (it will print the range of line no from 30 to 50)
+sed 's/red/blue/' filename(is used to change only the first occurance)
+sed 's/red/blue/2'filename(is used to change only the second occurance)
+sed 's/red/blue/g'filename(is used to change all globally)
+s=stream=output(it will not save in the original file)
+sed -i 's/red/blue/g' filename
+
+more filename -->(is used to view the file page by page)
+ cntrl+f --> to move page forward
+ cntrl+b --> to move page backward
+
+sort filename ---> is used to arrange tha alphabetical order
+| --> is called as pipe (is used to save the temporary output and that out will give a input to the other command)
+cat filename | sort ---> (sort cmnd without giving seperately using pipe we can give in the same cmnd)used to display the 
+cat filename | sort -r --->(it display to sort in a reversing order)
+
+tr --> translate (a-z) (A-Z) (is used to convert upper case to lower case)
+cat filename | sort | tr [a-z] [A-Z]
+
+GREP-->Global regular expression print (is used for searching purpose)
+eg (in a file name called sorting in that we need to search for zebra means using this cmnd we can able to search)
+grep jungle sorting.txt 
+grep JUNGLE sorting.txt
+grep -i jungle sorting.txt --> ignoring case sensitive
+grep 'jungle king' sorting.txt --> to search a multiple words word.
+------------------------------system resource commands----------------------------------------------------------------------------------------------
+who ---> it shows who is logged in,which user is logged in
+who -H--> it will display the logged in usr with heading.
+w --> it show how many user logged in and it shows uptime,and it say what they are doing,and also give status abt
+      load avg(how our cpu is gng to performing)
+      QN? --. what are the intervals of load avg:
+              1st min , 5th min, 15th min
+               0.00      0.00     0.00
+if it above 8.8 means cpu is highly utilized
+
+uptime ---> it tells abt the uptime of the server
+unmae ---> is used to display the os.
+uname -r ---> is used to display the kernerl release
+cat /etc/os-release --> is use to view the os release
+cat /proc/cpuinfo--> is used to view the cpu info
+QN?---> How to check the core of the cpu -->cat /proc/cpuinfo
+QN? DIFF bw who and w command --> both are same bt comparing to who w as more cmnds w has loadaverage values
+
+
+for each cmnd they will have a manual page (it describe abt the cmnd)
+and also they used to have the binary files.
+whereis ls--> it display the ls bin and manual location
+whereis pwd--> it display the pwd bin and manual location
+
+top---> it will show which process takes how much utilization
+date-->print date and time
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

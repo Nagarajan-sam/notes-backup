@@ -1,0 +1,26 @@
+1.
+a = input()
+print( a.count('p'))
+count =len("Bengaluru is silicon city".split())
+print("count of words is:",count)
+
+2.
+a=list(map(int,input().split()))
+z = []
+for i in a:
+    z.append(i)
+print(a+z)
+3.
+n=float(input())
+m=round(n,2)
+a=round((m+273.15),2)
+b=round(((m*1.80)+32.00),2)
+print([a,b])
+5.
+a=input()
+z=input()
+count=0
+for i in z:
+    if i in a:
+        count=count+1
+print(count)

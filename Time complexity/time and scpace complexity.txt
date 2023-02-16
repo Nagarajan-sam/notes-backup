@@ -1,0 +1,45 @@
+time complexity != time taken (eg old computr and the new macbook)
+time taken = is the prgrm run time.
+time complexity = fn that gives a relationship about how the time will grow as the input grows
+time complexity is the math fn
+linear search and log(n) 
+if the data is higher then the linear line takes the more time
+and the log(n) line time taken is lower compare to the linear line so the log(n) is better
+time constant complexity = time taken will be in constant (when the large amount of data means at the time
+                           liner as hightime and the log(n) aalso higer compare to time constant.constant time is lower time
+expo complexity = for small data itself it will take more time ,so this is not a recommended one.
+
+PROCEDURE FOR ANALYSING A TIME COMPLEXITY?
+'what do we consider when thinking abt the complexity?
+1.allways think for the worst case complexity
+2.always look at complexity for large data
+3.ignore constans (even the value of actual time is differ they are all growing linearly)
+4.o(N**3 + log N) -->from point no 2
+   data = 1mil -->(1mil**3 + log(1mil))
+                  (1mill**3 + 6 sec) --> here 6sec is very small so ignore that,always ignore less dominating terms.
+ with this 4 point we can derive the any time cmplxty eqn.
+o(3N**3+4N**2+5N+6) point 3 and 4 is very imp for soving all
+  (N**3+N**2+N)-->  acrding to point 3 we remove the constants
+  (N**3)-->   ACCCRNG to point 4 we ignore the less dominating terms
+   o(N**3)--> is the final one
+o(1)<o(logN)<o(N)
+
+BIG OH NOTATION:
+o(N**3) --> big oh notation is also called as upper bound, which means it does not exceed a n**3 value.
+math:
+f(n) = o(g(n)
+lim    f(n)
+n-~     _____  < ~(infinity)
+       g(n)
+
+o(N**3) = O (6N**3+3N +S)
+  g(n)         f(n)
+ 
+= 6n**3+3N+S
+  ----------- --> 6+3/N**2+S/N**3 =>6+3/~+S/~
+    N**3
+anything (3)/ infinity =0 => 6+0+0 =>6
+therefore 6 < infi
+
+BIG OMEGA NOTATION:
+omega sym (N**3) --> IT is lower bound,it have more the n**3, and it limit (low values) upto n**3
