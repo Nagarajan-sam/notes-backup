@@ -1,0 +1,161 @@
+ 
+A.apt-get install docker.io -y 
+i-->input (client)
+o-->output(server)
+docker --version--> to check wheather docker is install r not.
+docker version --> it shows client and server model installation.
+
+project 1:
+using apache need to run a 2 microservices
+middleware: apache
+no of ms:2 (single server can run multiple micro depl 
+source code: index.html
+ms1:Facebook : 8060(p.no)
+ms2:instagram : 8070(p.no)
+
+B.After installing Docker:
+go to docker hub pull the cmd for http
+ 1.docker pull httpd
+ 2.docker images --> is used to see the install images
+ 3.docker run -itd --name facebook -p "8060:80" httpd
+                          cntname portfor  http.pno imagename
+ 4.docker run -itd --name instagram -p "8070:80" httpd
+ 5.docker ps ---> to see the container 
+hit the ip with the p.no o/p works fine
+
+C.Changing the source code with that container:
+ 1.docker exec -it cont-id /bin/bash   i-interativemode ,t for terminal it asks for input ,exec to connect the runing cont.
+ 2.it will open in default path /usr/locsl/apache
+ 3.ls--> cd htdocs-->here will have the source code and we can add our src code here -->ls(will have index.html)
+ 4.vi index.html(will get error ,bcz that pck didn't contain vim,wget so we are gng to get vim nd wget by following steps)
+ 5.apt-get update,apt-get installvim done in path of htdocs
+ 6.vi index.html and edit the code save and hit ip it will work
+ 7.exit--> to come out from the container
+
+d.docker commands
+1.docker stop cont-id (it will stop the cont)
+2.docker start cont-id(it will restart again)
+3.docker kill cont-id(it will kill the cont id force fully stopping the cont nd we can restart it again)
+4.after statrt nd stop our cont pid will change
+5.docker pause cont-id (to pause- it will surf continuoes bt not load in web) unpase cmd to unpause
+6,docker top cont-id(to view p-id)
+7.docker stats c-id(is used to view mem nd cpu utilization,i/o speeds) -->ctl+z (to come out)
+8.docker logs c-id (to see the logs)
+9.docker inspect c-id (its show env var ,what nd all we did in this cont)
+10.doc info c-id(it show info abt the container info like os cpu mem)
+11.docker ps -a (is used to see all the cont including the exited cont
+12.docker container prune (is used to delete the exited cont)
+13.docker rm -f c-id (forcefully removing the cont)
+14.docker rmi imgid (is used to remove the img)
+
+E.Making the container to add new feature nd using tat cont making new img:
+additionaly want to add vim to the conatiner (using COMMIT CMD WE CAN DO IT
+1.docker commit cont-id myimage(user defined name) --should done outside of the cont
+2.docker images(checj the size it will chang)
+
+F.Taking backup of the myimg can done by 2 way (using localbackup and cloudbackup)
+local bckup can done only in tar format and have to mention the file path
+1.docker save -o /root/myimgbackup.tar myimg (imgname)-->ls-lart -->will have the backup file
+G.WANTEDLY REMOVING MYIMG AND DOING BACKUP FROM LOCAL:
+1.docker rmi imgid (if the container is launnched means 1st remove the cont)
+2.docker load -i myimgbackup.tar (image name)
+3.docker images
+
+H.now backuping to the cloud service(dockerhub)
+1.intergrating the cloud server and docker server and pushing the img to cloud(dockerhub)
+2.docker login (user name and pw)
+3.have to TAG THE IMG (it maintain version of img ,size ,time)
+4.docker tag myimg dockerusername/give new name for img
+5.docker push m dockerusername/give new name for img
+6.go to docker hub and check and also we can reuse by using pull cmd
+7.docker logout (to killthe integration part from cloud to docker server)
+
+I.CREATING A DOCKER FILE USING THAT HOW TO CONVERT THAT FILE TO IMAGES:
+1.vi Dockerfile (write the file)
+   FROM centos:7
+   MAINTAINER Gokul
+   RUN yum install wget vim -y
+2.docker build -t vimimage . -->(should be done only in the dockerfile path)
+3.docker images 
+4.docker run -itd --name vimcont  vimimg -->not using as micro service so no portforwarding.
+5.docker exec -it contid /bin/bash
+6. exit,exit
+ we cant bring the another docker file (duplication will not wrk)
+
+J.From a existing docker file ammending the git .
+1.exit tat container
+2.go to that docker file nd edit
+  FROM vimimg (this vimimg already contains vim and wget)
+  maintainer Gokul
+  RUN yum insatll git -y
+3.docker build -t vimimg . (rebuilding the img with new git instln)
+4.docker run -itd --name gitcont vimimg
+5.docker exec -it cont-id /bin/bash
+6.git --version
+7.exit,exit
+
+K.MAKING A NEWDIR AND RUNNING THE DOCKR FILE
+mkdir -pythoncont
+vi Docker file
+FROM ubuntu:18.04
+ENV TZ=Europe/kiev
+RUN ln -snf /usr/share/zoneinfo/$TZ /ETC/localtime && TZ > /etc/timezone
+RUN apt update && apt install -y python-pip python-dev ssh python-boto3
+2.docker build -t pythimg
+3.docker run -itd --name pythcont pythimg
+4.docker exec -it cont-id /bin/bash
+python --version
+python2 --version
+python3 --version
+
+L.DOCKER volume
+MOUNTING THE LOCAL FILESYSTEM AND THE CONTAIINER FS
+ From the local files system we can able to aces the cont file system using docker mount
+1.mkdir mylogs
+2.cd mylogs -->pwd
+3.downloading and launcing the container and syncing the local fs and cont fs
+4.docker run -itd --name web -p "8010:80" -v "/root/mylogs:/usr/local/apache2/htdocs" httpd
+5.docker images -->httpg
+6.docker ps --> it will show cont 
+7.docker exec -it cont-id /bin/bash
+8.cd htdocs
+9.echo "this is my volume sync test" > index.html (this will be reflected in local fs) hit in web
+10.exit
+11.go to localfile system and check using ls Nd do some changes
+vi index.html -->thid is ,my local volume sync test-local fs level enhancement and hit the ip in web
+12
+
+M.Docker network:
+1.docker network create test-bridge ---newly created bridge nw
+2.docker network ls --> is used to view our nws.
+3.docker network inspect bridge in that (gateway is the bridge 0 ip)
+4.ip a -(to view bridge ip)
+5.sudo docker network inspect host (it dont have any ip ,bcz it access only with in the host)
+6.run the sample httpd container and 
+7.ping ip  (through docker host)
+7.curl  ip :80 --> it show the output (without portforwdng we can acces the container only wiht in the host(
+9.launching another cont 
+10.docker run -itd --name cont2 ubuntu
+11.docker network inspect cont2 check the ip
+ping cont1 and cont2 ip (through docker host)
+go back to dockhost nd first ping the 2 cont using ping ip commands
+12.login to cont-2 using
+13.docker exec -it contid /bin/bash
+14. apt-get install net-tools
+15.apt-get update
+16.apt-get install net-tools
+17.apt-get install ping
+18.cat /etc/host -->here also we can sww the ip add
+19.ping ip --->(from cont 2 we are accessing the cont 1)
+20.apt-get install curl
+21.curl ip-add (from cont 2 we can able to easily access the cont 1)
+weh hVE 2 CONT  from cont2 going to ping cont1 (cont1 contains ubuntu,cont2 contains httpd)
+22.docker run -itd --name cont3 --network=host ubuntu
+24.docker run -itd --name cont4 --network=none ubuntu
+25.docker run -itd --name cont5 -p "8060:80" httpd (port forwarding)
+                                -P Defaultly it assign port 
+
+
+
+
+ 

@@ -1,0 +1,111 @@
+Ansible 2.7.18
+port no -22= is imp to comm slave
+A.bootstrap:
+#!/bin/bash
+yum install python-pip -y
+B.INSERVER:
+  pip install ansible
+  ls -ltr --> no file is there need to create a 2 files
+
+   1.inventry file-->normally doing by vi inventry file:
+     vi slaves.txt(add slave pvt ip)
+   2.ansible.cfg(web =ansible config file git hub) selsect the latest level and click raw and copy the url wget and paste.
+ ls -ltr (will have th efile)
+
+ADHOC COMMANDS (can done only one task at a time)
+c.checking whether all our slave is working r not by ping cmd:
+ 1.ansible all -i slaves.txt -m ping   (if it is git r docker write as git docker instead of ansible) 
+ 2.always it will ask for permision for dng in auto gong to (vi ansible.cfg) in that host key chkng change true to false  and uncommand it
+ 3.ansible all -i slaves.text -m "uname -a" (to very the os)
+
+YUM = PING,UPDATE these are all packages so this is (module) -m
+inside that module    we are gng to do a function tat fn is a (arg) -a
+ 4.ansible all -i slaves.txt -a "uptime" ( is used to see how much time our server is ruuning)
+
+D.Grouping method in ansible:
+going to vi slaves.txt in that do grouping, in top keep ip out of that group
+grouping name=[prod]--> should be given like this
+
+  1.installing apache (httpd) on to the grouping server
+     ansible prod -i slaves.txt -m yum -a "name=httpd state=present" -b [(-b is for root permission)for installing we need to be root]
+     ansible prod -i slaves,txt -m yum service -a "name=httpd state=started"
+         state:
+           1.present/latest=install
+           2.absent=uninstall
+           3.started=start
+           4.stopped=stop
+           5.restarted=restart
+    now ping the slave by hiting the ip
+ 2.ansible all -i slaves.txt -a"yum install git -y" (now waching wheather git is install r being  in the master)
+SHOULD BE DONE IN ROOT:
+ 1.vi ansible.pem (copy paste the pem file)
+ 2.chmod 400 ansible.pem
+ 3.ssh -i ansible.pem ec2-user@pUB ip of slave machine
+ 4.git --version 
+ 5.sudo su - ec2-user
+                              PART-B PLAYBOOK
+USING PLAYBOOK CAN DONE MULTITASKING
+
+- hosts: all
+  remote_user: ec2-user
+  become: yes
+  tasks:
+  - name: install the latest version of httpd server
+    yum:
+      name: httpd
+      state: latest
+  - name: start the service of httpd
+    service:
+      name: httpd
+      state: started
+  - name: cp the content from src
+    copy:
+      src: /home/ec2-user/index.html
+      dest: var/www/html/index.html
+      mode: '777'
+
+
+2.- hosts: all
+  remote_user: ec2-user
+  become: yes
+  tasks:
+  - name: installing the latest version of the packages
+    yum:
+      name: "{{ item }}"
+      state: present
+    loop:
+      - php
+      - mysql
+      - unzip
+      
+ansible-playbook -i slaves.text looping.yaml --syntax-check
+ansible-playbook -i slaves.text looping.yaml
+
+
+                                        PART-C
+1.Ansible galaxy
+2.vaulyt
+3.roles
+
+MODULE TAG: is used to run only the particular task (have to mention tag with particular service)
+
+roles:
+ansible-vault encrpyt looping.yaml
+   82  ansible-vault encrypt looping.yaml
+   83  cat looping.yaml
+   84  ansible-vault view looping.yaml
+   85  cat looping.yaml
+   86  ansible-vault edit looping.yaml
+   87  ansible-vault decrypt looping.yaml
+   88  cat looping.yaml
+   89  ansible-vault encrypt looping.yaml
+   90  ansible-vault rekey looping.yaml
+   91  ansible all -i slaves.txt
+   92  ansible all -i slaves.txt -m ping
+   93  ansible-playbook -i slaves.txt looping.yaml
+   94  ansible-playbook -i slaves.txt looping.yaml --ask-vault-pass
+   95  ansible-vault decrypt looping.yaml
+   96  cat looping.yaml
+
+
+

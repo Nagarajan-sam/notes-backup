@@ -1,0 +1,25 @@
+ apt-get install java-1.8.0
+    2  sudo apt-get install java-1.8.0
+    3*
+    4  apt-get install java-1.8.0 -y
+    5  apt-get update
+    6  apt-get install java-1.8.0
+    7  apt install java-1.8.0
+    8  sudo apt install openjdk-8-jre
+    9  java -version
+   10  apt-get install mysql -y
+   11  apt install mysql-y
+   12  apt install mysql -y
+   13  apt-get update
+   14  java -version
+   15  apt-get upgrade
+   16  java -version
+   17  apt install mysql -y
+   18  sudo apt install mysql-server
+   19  mysql -version
+   20  mysql --version
+   21  sudo systemctl start mysql.service
+   22  mysql -h mysonar.cwa3ja8bnzwv.us-east-2.rds.amazonaws.com
+   23  mysql -h mysonar.cwa3ja8bnzwv.us-east-2.rds.amazonaws.com -P 3306 -u admin -p
+   24  clear
+   25  history

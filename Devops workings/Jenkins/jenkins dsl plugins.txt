@@ -1,0 +1,33 @@
+jenkin job dsl is a plugin that allows you to define jobs in a programmatic form with minimal effort.
+DSL-Domain specific language it is groovy based lang
+jenkin job dsl plugin was designed to make it easier to manage the jobs
+if we dot have lot of jobs using ui is the easiest way to create a job,
+bt when the jobs goes high it become difficult to maintain and have lot of work.
+
+The jenkins dsl plugin solver this prblm nd will get extra benefits.
+  user can create multi jobs,rollback verson ctl,history,auditlog,easier job restore when something goes wrong.
+
+jenkins terms:
+SEED JOBS:after installing the dsl plugin 1st need to create a seed job
+ seed job which is used to create the configurable job with the help of the dsl code script.
+seed job used by the dsl plugin to create the jenkin config job 
+seed job is a jenkins jobs which runs a dsl script and then generates a new job.
+
+seed job will accept our code as a parameter and create a new project accordingly as defined inside our coude
+
+the seed job is a normal free-style jenkins jobs that u add the"process job DSL build step.
+this step takes the dsl nd generate the confg jobs.
+
+while executing the job the script approvel is required ,we need to give the script approval.
+
+manage jenkins ,will have inprocess script approval click that at approved it
+
+
+jenkins files
+cron job -using cronjob we can able to run a partiuclar task at particular time
+syntax for dec nd script
+feature of jenkins
+requiements to install jenkins
+which file will have inital admin password in jenkins.
+types of pipeline
+scm tools jenkins supports.

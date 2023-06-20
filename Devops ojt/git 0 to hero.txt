@@ -1,0 +1,23 @@
+git using ssh>
+ssh-key (give enter , enter enter will have image ,after tat go to tat directory will have the pubkey) or
+enter and give passphrase protected key
+cd .ssh --> explorer . =>will open the explorer will have the key
+copy the pubkey and paste in git =>in git go to setting and click ssh and gpg key 
+paste in ssh ,now copy the ssh url and type the cmd git clone and paste the url.
+CMD:
+   git remote (it will show as origin)
+   git remote -v ( it will show push and fetch  )
+git remote = it will come as origin (we can also able too change the origin)
+git clone -o gokul url => git remote => it will show gokul
+
+git status= to check we are in main branch r not
+git checkout main= if we are not in main going to main
+git switch main=  this one is also to switch the main   
+git branch gokuldev =for creating a new branch
+git switch or checkout gokuldev = is used to go to that branch 
+git branch = is to view in which branch where we aare
+git chechkout -b gokultest-branch= is used to create a new branch called gokul test
+git switch -c gokuldeploy-branch = is also used to creata branch
+git branch -d gokuldeploy-branch= is used to delete that branch
+git branch -d gokultest-branch= to delete the test branch 
+ 

@@ -1,0 +1,209 @@
+A.shell scriptin
+shell:
+ shell is a program, it is an cmd line interface ,where the user can give commands ,kernel accepts the command from user
+and execute process.
+
+script:
+ script file contains the series of commands,we can execute the same file without any compilation process,it will help
+us to automate the sever administration task.
+
+SERVER ADMINISTRATION TASK:
+ Server admt task ,installing,configuring and maintain various types of hardware and software,which often involves
+creating the user account,backup and recovery,and monitoring the performance of the severs.
+
+SHELL TYPES:
+'sh' = bourne  shell
+'bash'=bourne again shell
+'csh'=cshell
+'tcsh'=tc shell
+'ksh'=korn shell
+
+practical:
+date
+cal
+top-- to see the processor details,which process is running.
+ps- to see currently which process in running
+ps -aux-- to see the whole usage process
+ps- aux | grep root-->it show the only root user using the processor
+**********************creating and executing the script*****************
+1.create a dir--> mkdir script
+create a file with exten -->first.sh
+give the execution cmd --> chmod +x filename
+to print a file-->./filename
+**the words given with a double quotes is called string***
+*****************************************************************
+2.in the same file we can also do script(series of cmds)
+next line type ->pwd,ls -l
+************************************************
+3.#! /bin/bash
+echo "Hello $LOGNAME"
+echo "Welcome to the world of linux automation"
+echo "The host name is `hostname`"
+echo "your present working directory is `pwd`"
+
+echo "Thankyou,see you soon $LOGNAME"
+************scheduling job AT and CRONTAB*************************
+1.AT ---->using a single r double cmd we can create a job instantly as per our time
+if at is not install install at  --> at 12:46 
+mkdir /home/gokul/script/directory
+if it is not get started comes error means do this -->sudo /etc/init.d/atd start
+2.CRONTAB --> IS USED for automatic job scheduling and we can able to run the script 
+
+min hr day month dayofweek cmd
+30  4   28   11    6
+day of week =0 & 7 = sun 
+----------------------------------------------(B)-----------------------------------------------------------------------------------------
+(1.)B.Variable:
+   variable is a symbolic name to define a value
+   eg: a = 20  ,,, a = symbolic name ,,,20=value
+to read the value ,we need to put ($) sign before the symbolic value
+************************************
+(2). 2 types of var
+system var
+userdefined var
+***setting a value in variable**********
+USER DEFINED VARIABLE:
+  vi testscript.sh
+     a=10 (no gaps)
+     echo $a
+     ./testscript.sh (or) sh testscript.sh
+********How to use qoutes in var*************************************
+(3). b="Gokul Anand" (we should give this inside the quotes r space will consider as one inpt nd it shows the error)
+$b
+****(4).our first simple var script*************************************
+org="msys tecnologies"
+nw=192.168.0.0/24
+in="active"
+sc=20
+echo "your org name is $org"
+echo "your org network id id $nw"
+echo "internet avail is $in"
+echo "your org total sc is $sc"
+echo "Thank u so much for viewing the details"
+sh filename.sh
+********(5).Exporting variables-exporng one var into another********************************************
+Exporting the one value of file into the another file using by below one
+eg.second.sh file we have (export org = "msys technologies")
+   sh /home/gokul/script/robot.sh --->it says were w have to exute it will execute from the file 1 itself
+in file 2 (robot.sh) we have echo "this is the keyword from export coming from second.sh =$org"
+************UPDATING THE VAR*********************************
+1.org="msys tech"
+org="new company"----> it will update the value
+2.org="msys tech"
+readonly org 
+org="new company"---> it will not update the valuebcz it is read only value.
+**************FINDING THE VAR LENGTH***************************
+a="gokul anandan"
+count=${#a}
+echo "the total lenght of the word is = $count"
+************getting the value from the user input*************
+read -p "enter the org name :" org
+read -p "enter the network status :" internet
+read -sp "enter the pw :" pw  ---> pw will be in hidden sfor silent input
+echo " the org name is $org"
+echo " the ntwrk stat is $internet"
+echo " the password is $pw"
+----------------------------------------------(c)Arithmetic operation----------------------------------------------------------
+how to declare a var type to int?
+synt: declare -i var_name
+PRACTICAL:
+number=4
+echo $number -->will give the op
+****PLAN ABT INT ----------------------\
+LET,EXPR,ARITHMETIC EXPANSION,ORDER OF OPERATION
+number=6
+declare -i var-name
+number=number+1
+echo $number
+number=number*2
+echo $number
+*****arth operators using LET,EXPR,ARTH EXPANSION,ORDER OF OPERATION******
+LET -->set the value first (value = 6)
+let value=value+2
+echo $value
+let value=value++   --->increament the 1 value
+echo $value
+let value=value--   --> decreament the value by one.
+
+EXPR-->SYNTAX IS NEED TO GIVE THE SPACE AFTER THE OPERATORS:
+expr 4 + 4
+expr 4 \* 4 ---> is the symbol used for multiplication purpose
+expr 4 / 2
+ARITHMETIC EXPANSION:-->
+a=4
+b=6
+c=$[a + b]
+echo $c
+a=2
+b=3
+c=[a ** b]
+echo $c
+
+ORDER OF OPERATION:
+echo $[(1 + 3) * 2]
+---------------------------------------(D) if statement---------------------------------------
+1.if-then-fi
+2.if-then-else-fi
+3.if-then-elif-then-else-fi
+4.Nested if
+--------------------------------------(E) boolean - logic operator-------------------------------
+1.AND &&  --> The condition is thath Both the command should be true
+2.OR || ---> if the 1st condition fails after that only it 2nd condition will get execute
+
+& ---> simultaneously it will do the both the function, bt sometime error may occur error
+eg : touch one.txt & cat >> one.txt  -->here 1st cat will run the operation bt i wont open the file
+
+&& ---> first it will execute the 1st one then only it will execute the second one.
+eg : touch one.txt && cat >> one.txt
+
+|| --> first condition should fail then only the other wil get execute
+eg:catch three.txt || touch three.txt
+
+; --> its very dangerous cmd , second cmd will run definitely whether the 1st cmd runs or not
+ mkdir semicolon
+cat important /home/gokul/script/boollogic/semicolon/imp.sh
+
+LOGICAL OPERATOR-->they are also known as boolean ops ,3types and ,or ,nt eqto
+AND -->this is bin op which returns true if both the operands are true other wise returns false
+or  -->this is bin op which returns true is either of the operand is true or both the operands are true
+and return false if none of then is false
+NOT EQUAL TO -->this is unary operator which returns true if the operand is false and returns false if the 
+operand is true.
+
+---------------------------(E) Switch case-----------------------------------------------------------------
+It is same as if-elif statement and also it is better than a if -elif state ,it is moe efficient than the if -elif
+fruit=kiwi r read -p "enter the value :" val
+case $fruit
+grape)
+echo "this is fruit"
+;;
+apple)
+echo "this is fruit"
+;;
+*)
+echo" not a fruit"
+esac
+
+--------------------------(F)  Data Types-----------------------------------------------------------------------
+1.array
+2.set
+ SET :1.contains 1variable bt many values 2. 4,5 things have to do give in a single file means we can use set 
+ARRAY :it is variable that contains a multiple values of same type and diff type.
+
+--------------------------(G)Looping--------------------------------------------------------------------------------------
+looping is used for repetative operation
+
+
+FILTER MAP REDJUIE COMPRENHEN DICT LIST COMPRRENH
+FINDOUT THE MAX VALUE IN LAST
+HOW TO FIN OUT THE 2ND MAX
+SORTING
+
+
+
+
+
+
+
+
+

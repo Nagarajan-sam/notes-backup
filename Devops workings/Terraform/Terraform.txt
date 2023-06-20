@@ -1,0 +1,169 @@
+TERRAFORM-ENV BUILD TOOLS (IAAC )
+VPC- infrastructure created only one region 
+CF - can make template, we build infra using this template ,at a time we can able to create n no of infrastructure in diff region,
+     bt can't able to create in other service providers.
+TF- we can build our env in diff cloud service providers
+    in single shot we can build n no of infra at a time.
+
+A(1).TERRAFORM SETUP:
+1.Go to terraform officail page (terraform.io)-->download CLI-->select linux-->1.0.11 copylink address--
+A(2).Launch ec2-server(this have only server access permission,need to attach iam roles and policy
+A(3).IAM ROLE + ADMIN POLICY + ASSOCIATE WITH TERRAFORM SERVER
+4.GO TO IAM GIVE ROLES -->POLICY--ADMINISTRATION FULL ACCESS-->ROLE NAME
+5.Associating with server -->click server -->action-->security-->modify IAM ROLE-->select the iam role
+
+B.TF INSTALLATION (PUTTY)
+1.sudo su -
+2.wget https://releases.hashicorp.com/terraform/1.0.7/terraform_1.0.7_linux_amd64.zip (dont do int opt bcz this is single bin files no need to install)
+3.ls -lt-->apt-getinstall unzip-->unzip
+4.moving TF in appropriate path -->mv terraform /usr/local/bin/ -->cd /usr/local/bin/-->ls -->terraform --version
+5.go tf io --> browser-->providers--> aws --> 3.50.0-->click documentation-->
+
+c.CREATING CLOUD SERVICE PROVIDERS AND CRATING A VPC:
+1.Docu-->aws provider-->copy and paste that code in vsc
+2.region="ap-south-1"
+go down and search for vpc:
+1.resource="my vpc" (this is id of my vpc)
+2.cidr block="10.0.0.0/16"
+3.instance_tenancy=default (we can demolish after the testing ,dedication -for demolishing we need to pay some chrg)
+4.Name="msys"
+
+D.CREATING 2 SUBNET 1-PUB SUB WITH IP=10.0.1.0/24 IN AP-SOUTH-1A ,1-PRI SUB WITH IP=10.0.2.0 IN AP-SOUTH-1B:(in VPC)
+DOCU-->AWS SUBNETS -->CPY PASTE
+1.resource="pub sub"
+2.vpc_id=myvpc
+3.cidr block=10.0.1.0/24
+4.availability_zone="ap-south-1a"
+5,name="PUBLIC SUBNET"
+CPY PASTE ABOVE ND DO SOME CHANGES:
+1.resource="pri sub"
+2.vpc_id=myvpc
+3.cidr block=10.0.1.0/24
+4.availability_zone="ap-south-1b"
+5.name="PRIVATE SUBNET"
+
+E.INERNET GATEWAY:
+DOCU-->AWS INTERNET GATEWAY
+1.resource=tigw
+2.vpcid=myvpc
+3.Name="INTERNET GATEWAY"
+
+F.CREATING PUB ROUTABLE and giving access to IGW:
+DOCU-->AWS ROUTABLE
+1.Resource="pubrt"
+2.vpc_id=myvpc
+3.cidr block="0.0.0.0/0" -->open ip address(for public access)
+4.gateway id=tigw
+5.name="PUBLIC ROUTE TABLE"
+6.del ipv6
+CREATING AWS ROUTABLE ASSOCIATION:
+1.Resource="pusubassc
+2.subnetid=pubsub
+3.routable=pubrt
+
+I.CREATING EIP:
+1.resource="teip"
+2.delete the line (bcz we are allocating eip to natgw not for ec2)
+
+
+H.CREATING NAT GW:
+DOCU-->AWS_NAT-GATEWAY:
+1.resource="tnat -->natgw runs in elip so eip is needed
+2.allocation id=teip (from above (i) )
+3.subnt id=pubsub(giving access from pub sub)
+4.name="NAT GATEWAY"
+REMOVE THE BELOW LINES
+NOW ALLCOATION ID IS NEEDED FOR THAT NEED EIP ,EIP WILL BE IN EC2 SERVER -go to ec2 server->AWS EIP
+
+
+G.CREATING PRI ROUTABLE AND PRIVATE SUBNET ASSOCIATION.
+1.COPY PASTE F AND G 
+2.Resource="pribrt"
+3.vpc_id=myvpc
+4.cidr block="0.0.0.0/0" -->this wont able to access
+5.gateway id="aws_nat_gateway.tnat.id (from H nat gateWAY )
+6.name="PUBLIC ROUTE TABLE"
+CREATING AWS ROUTABLE ASSOCIATION:
+1.Resource="prsubassc
+2.subnetid=prisub
+3.routable=prirt
+4.balance is nat gw should done by above
+
+J.SECURITY GROUPS-Who nd all wants to acces our server (IN PUB SUBNET GOING TO LAUNCH A WEBSERVER ,IN PVT GNG TO LAUNCH A APPSERVER)-->ACL
+1.pubsg-ssh(for linux server),http,https,source-0.0.0.0/0
+2.prisg-alltcp 0 to 655355,source -(have to give pub cidr ,bcz it comes from the pub access)-10.0.1.0/24
+GO TO VPC IN DOCU -->SLCT -->AWS SECURITY GROUP-->cpy paste tat
+1.(A)
+3.resrc=pubsg
+4.name=pubsg
+5.vpc_id=myvpc 
+6.ingress(INBOUND RULES)    -->cp paste         ingree        - cp-paste              ingress
+ from_port = 22                              from_port = 80                             fromport=443
+ tp_port=22                                   to port=80                                  toport=443
+  protocol=tcp(all aws service run in tcp) 
+ cidr="0.0.0.0/0"                              cidr=0.0.0.0/0                               cidr=0.0.0.0/.
+7.egres-->is used for communicating from one server to another server leave as it is
+8.name=PUBLIC SECURITY GROUPS
+
+2.(A) COPYPASTE ALL ABOVE PUBSG ND DO CHANGES:
+1.resrc=prisg
+2.name=prisg
+3.vpc_id=myvpc 
+4.ingress(INBOUND RULES)    
+ from_port = 0                              
+ tp_port=65535                                  
+  protocol=tcp(all aws service run in tcp) 
+ cidr="10.0.1.0/24" -->FROM PUBSUB ID(bcz network comes from this way) 
+5.dont need to copy paste the ingree again
+6.egree(oubound rules)
+7.name="PRIVATE SECURITY GROUPS"
+
+K1.LAUNCHING WEB SERVER IN PUBSUB AND LAUNCHING APPSERVER IN PVT SUBTNET
+PUBSUNET=PVT IP IS YES(IF PVT YES MEANS THEN ONLY WE CAN DO LINK BW ONE HOST TO ANOTHER HOST),PUB IP IS YES 
+PVTSUBNET=PVTIP =YES,PUBIP=NO
+
+K2.CREATING EC2 INSTANCE:
+1.RESOURCE="pub_instance"
+2.AMI=COPY PASTE THE AMI
+2.instance type="t2.micro"
+3.associate pub ip="true"
+4.vpc secgrp=pubsg
+5.subnetid=pubsub
+6.keyname=give our key pair name
+7.tags-->name="msys web server"
+
+ FOR PVT INSTANCE:
+1.RESOURCE="pri_instance"
+2.AM-=give ami id
+2.instance type="t2.micro"
+3.associate pub ip="false"
+4.vpc secgrp=prisg
+5.subnetid=prisub
+6.keyname=give our key pair name
+7.tags-->name="msys app server"
+
+L.LOGIN SERVER AND CREATE FILE IN TERRAROM FILE FORMAT:
+1.cd -(entering in to root)
+2.vi main.tf-->(copy paste the code)
+3.terraform init
+4.terraform plan
+5.terraform apply
+6.now go nd check in console it will create all
+
+M.HAVE TO LOGIN INTO WEB AND APP SERVER via terrafrom server:
+1.IN TERRAFORM SERVER-->vi terraform.pem -->copy paste the pem file
+2.chmod 400 terraform.pem
+3.ssh -i terraform.pem ec2-user@pubip of msysweb server(will open web server from here we can pinging the app server)
+4.ping google.com
+5.IN WEBSERVER-->vi terraform.pem --.copy paste the key
+6.ssh -i terraform.pem ec2-user@pvt add of msys app server
+7.ping google .com
+8.exit-3 times
+
+N-Terraform destroy --> it will remove all including eip and natgw
+
+
+
+
+
+ 

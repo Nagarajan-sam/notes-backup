@@ -1,0 +1,126 @@
+                               A.Kubernetes
+1.container orchestration engine and open source platform for managing the containerized app.
+2.using this we can do cont deplymt,autoscaling& descaling and container load balancing.
+3.written in go
+4.stable ver:v1.20.0
+ADVANTAGES:
+1.auotmatic scheduling :k8s master will have advanced scheduler to luanch a cont on a cluster nodes.
+2.self healing capabilities:it will reshedule,replace, and restart the containers if the cont are crashed
+3.automated rollout and rollback:Automated rollouts and rollback
+   ROLLOUT:it will automatically switch to the latest version of our app
+   ROLLBACK:if that latest app is not healthy we can easily rollback to our previous version.
+4.Horizontalscaling & load balancing: -->it automaticallly scaleup and scaledown the app and do load balancing
+5.service discovery:need not worry about netwrk and comm bcz it will automatically assign ip add to cont and a single dns name 
+                    that can load balance inside the traffic, if it has a service and it has a many pod it will also do
+                     autoscaling.
+6.storage orchestration:with k8s we can mount the storage sm(backup of our pod and containers)
+
+k8's is declarative one-we need to declare what we want(how many replicas,etcc...)
+
+                          (B)K8'S OBJECTS: 
+1.PODS
+2.REPLICATION CONTROLLER
+3.REPLICASET
+4.DAEMONSET
+5.DEPLOYMENT
+6.PERSISTANT VOL
+7.SERVICE
+
+
+
+                         (C)KUBERNETES ARCHITECHTURE:
+k8's implements a cluster computing background ,everything works from insdie the k8's cluster.
+ the cluster is hosted by one node act as master nd other act as slave(node) which do actual contzn.
+
+MASTER NODE:
+1.MASTER MACHINE
+2.CONTAINER RUN TIME
+3.API-SERVER
+4.CONTROL MANAGERS
+5.SCHEDULERS
+6.ETCD 
+
+
+1.API-APP PROGm INTERFACE--->  user interacts with api ,it is a frontend of the k8 control plane.(using this we can comm to create pod,dply,update,etc..)
+2.Etcd -from api it persist(save) the info -->keyvalue data store (like DB),will have cluster info,maintain all the workload info of k8s.
+         it is db of k8's
+3.schedular: try to schedule the unscheduled pod in node with the help of kubelet from the etcd .
+4.control manager:it contron nd manages the nodes and pod
+  a.node controller
+  b.replication controller
+  c.deplyoment controller 
+  d.endpoint controller
+
+NODE1.
+WORKER NODE (MINION).
+1.CONTAINER RUN TIME
+2.KUBELET :node agent(master machine will interact with kubelet and it makesures  that containers are running in a pod,it will interact 
+           with cont run time,to create a cont
+3.KUBEPROXY : it contains the nwkng part,it redirect requests from cluster ip(virtual ip address) to pod ip,it maintains a netwrking parart
+ 
+
+FOR APP DEPLYMNT NEED TO INTERACT WITH MASTER USING CLI(KUBECTL), comm thrugh api
+kubectl and master machine need not to be in the same server ,it will comm via remote server.
+
+                                     (D)K8 INSTALLATION
+
+TYPES:  1.SELF MANAGED K8 CLUSTER                                                   2.MANAGED K8 CLUSTER(CLOUD SERVERS)
+         KUBEADM --multinode k8s                                                     EKS-elastic k8 service (aws
+         MINI KUBE--single node k8                                                      aks ,gke -google k8 engine,ike-ibm
+         kops-k8 ops 
+kops -it is a sw using this which can setup hihgly available prod ready k8s cluster in aws.kops will levarage cloud concepts like
+      autoscaling groups & launch config to setup highly availabe k8 cluster
+      it have 2 autoscaling groups and 2 launch config readily 1.for master and another for worker.
+
+
+1.SETTING A SELF MANAGED K8 CLUSTER:
+1.taking 3 unutu servers 1-manager 2-worker for manager need 4gb ram.
+Master =security groups= 6443 (k8 api server),2379-2380(etcd serverclient api),10250-->kubelet api,10251-->kube-scheduler,10252-->kube control mngr
+worker node=10250-->kupelet  api,tcp=30000-32767
+
+putty:following steps should done in all the server.
+sudo su -
+apt-get update -y
+apt-get install docker.io -y
+systemctl restart docker(optional)
+system enable docker.service (optional)
+curl -s https://packages.cloud.google.com/apt/doc/apt-key.gpg | sudo apt-key add
+sudo apt-add-repository "deb http://apt.kubernetes.io/kubernetes-xenial main"
+sudo apt-get install kubeadm kubelet kubectl
+kubeadm version
+
+sudo swapoff –a                                    swapmem=if the ram is full it will try to write some file, in k8 it should be disable
+sed -i '/ swap /s/^\(.*\)$/#\1/g' /etc/fstab
+apt-get install -y apt-transport-https curl
+
+
+systemctl daemon-reload
+systemctl start kubelet
+systemctl enable kubelet.services  
+
+should done in master:
+kubeadm init --which will inti apiserver,etcd,control manager,...
+
+1.while installing it will ask for start the using the cluster,need to run the following cmd (it contains master ip adn api portno)
+2.for connecting machine using tokens(should run ina worker machine)
+
+kubectl version
+kubectl get nodes
+kubeadm token create --print-join-command (if we loss the tocken we can get this from the accnt   
+IN A 2 WORKER MACHINE:
+as a root paste the token here 
+
+IN MASTER:
+kubectl get nodes-->it will list the node along with the master 
+all machines are not in a ready state (bcz we need to setup the nw)   
+need to initialize the network drivers -->kubectl get pods -n kube-system -->kubectl get pods -n kube-system -o wide =it shows all the info (some parts are 
+waiting for nw)`
+kubernets network -->weavent ihit that and paste  in master (it will work as a overlaynetworks and also as a pods) 
+                         
+
+
+
+
+
+
+ 

@@ -1,0 +1,58 @@
+Ansible project
+jenkins server 
+Above mentioned are our instances
+CREATING EC2 INSTANCE USING ANSI PLAYBOOK:
+---
+- hosts: localhost
+  tasks:
+    - name: 'Launch EC2 Instance'
+      amazon.aws.ec2_instance:
+        name: "jenkins-server"
+        key_name: "newkey"
+        vpc_subnet_id: "subnet-0380f0063a8f65b87"
+        instance_type: "t2.micro"
+        security_group: "sg-0641c3ab072bfce36"
+        network:
+          assign_public_ip: true
+        image_id: "ami-024e6efaf93d85776"
+        tags:
+          Environment: "Evaluation"
+
+2.INSTALLING JENKINS IN SLAVE MACHINE:
+---
+- name: Install Jenkins
+  hosts: all
+  become: yes
+
+  tasks:
+    - name: Install Java
+      apt:
+        name: default-jdk
+        state: present
+
+    - name: Add Jenkins repository key
+      apt_key:
+        url: https://pkg.jenkins.io/debian-stable/jenkins.io-2023.key
+        state: present
+
+    - name: Add Jenkins repository
+      apt_repository:
+        repo: deb https://pkg.jenkins.io/debian binary/
+        state: present
+
+    - name: Install Jenkins
+      apt:
+        name: jenkins
+        state: present
+
+    - name: Start Jenkins service
+      service:
+        name: jenkins
+        state: started
+        enabled: yes
+
+3.vi /etc/ansible/hosts =give pvt ip of slave
+4.vi /etc/ssh/sshd_config =uncommand the pubkeyauth
+5.master ubuntu home user=ssh-keygen
+  id_rsa_pub copy and paste to slave ubuntu cd .ssh =authorized key 
+6.chmod 644 authentication file

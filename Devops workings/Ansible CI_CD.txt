@@ -1,0 +1,7 @@
+jenkin plugin=ssh agent 
+
+Administrator=Admin@123
+
+webhook =setting,add webhook,give jenkins url along with /github-webhook/
+need to generate the tocken from jenkins 
+token for jenkins=11d85c58449d4904167b5a20114d671cca

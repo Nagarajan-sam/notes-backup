@@ -1,0 +1,109 @@
+   For installing ansible and using playbook created a Ec2-instance:
+
+   sudo apt update
+   sudo apt install software-properties-common
+   sudo add-apt-repository --yes --update ppa:ansible/ansible
+   sudo apt install ansible
+   ansible --version
+   apt install python3-pip
+   pip3 install boto boto3
+   python --version
+   curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
+   unzip awscliv2.zip
+   sudo ./aws/install
+   aws configure
+   AWS_ACCESS_KEY_ID=AKIAR6DMMFDMH4NBMZ5L
+   AWS_SECRET_ACCESS_KEY=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
+   vi create_ec2.yaml
+---
+- hosts: localhost
+  tasks:
+    - name: 'Launch EC2 Instance'
+      amazon.aws.ec2_instance:
+        name: "jenkins-server"
+        key_name: "newkey"
+        vpc_subnet_id: "subnet-0380f0063a8f65b87"
+        instance_type: "t2.micro"
+        security_group: "sg-0641c3ab072bfce36"
+        network:
+          assign_public_ip: true
+        image_id: "ami-024e6efaf93d85776"
+        tags:
+          Environment: "Evaluation"    
+
+
+   ansible-playbook create_ec2.yaml
+
+FOR installing jenkins using ansible Playbook:
+vi jenkins_server.yaml
+ansible-playbook jenkins_server.yaml
+
+jenkins_server.yaml:
+---
+- name: Install Jenkins
+  hosts: all
+  become: yes
+
+  tasks:
+    - name: Install Java
+      apt:
+        name: default-jdk
+        state: present
+
+    - name: Add Jenkins repository key
+      apt_key:
+        url: https://pkg.jenkins.io/debian-stable/jenkins.io-2023.key
+        state: present
+
+    - name: Add Jenkins repository
+      apt_repository:
+        repo: deb https://pkg.jenkins.io/debian binary/
+        state: present
+
+    - name: Install Jenkins
+      apt:
+        name: jenkins
+        state: present
+
+    - name: Start Jenkins service
+      service:
+        name: jenkins
+        state: started
+        enabled: yes
+                     
+                          
+                                                                   Task-3
+ prereq:
+ec2 instance
+s3
+
+
+    1  sudo apt-get update
+    2  sudo apt-get install awscli
+    3  aws configure
+    4  vi scripts3.sh
+#!/bin/bash
+
+# Create a timestamp
+timestamp=$(date +"%Y%m%d%H%M%S")
+
+# Copy the data from /var/error.log to S3 bucket with timestamp in the file name
+aws s3 cp /var/error.log s3://cronjobbucket2811/error_$timestamp.log
+
+# Delete the data after one day
+#sleep 86400 && aws s3 rm s3://cronjobbucket2811/error_$timestamp.log
+
+     5 chmod +x script3.sh
+     6 crontab -e in that we set as */3 * * * * /bin/bash /root/scripts3.sh
+     7 In aws console set lifecycle management that bucket should  be deleted in a day 
+     
+
+
+
+
+   
+   
+
+
+  
+

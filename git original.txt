@@ -1,0 +1,60 @@
+apt-get update
+    2  git --version
+    3  cd /opt
+    4  mkdir git
+    5  cd git
+    6  git config
+    7  git config
+    8  git config --global user.email "gokulanand28.com"
+    9  git config --global user.email "gokulanand28@gmail.com"
+   10  git config --global user.name "gokulgemini"
+   11  git config -l
+   12  git init
+   13  ls -la
+   14  cd .git/
+   15  ls
+   16  cd ..
+   17  mkdir test
+   18  cd test
+   19  vi test.txt
+   20  cd ..
+   21  ls
+   22  git status
+   23  git add test
+   24  git status
+   25  git branch
+   26  git commit -m "first commit"
+   27  git branch
+   28  git log --oneline
+   29  git show 1c900d3
+   30  git remote add origin https://github.com/Gokulgemini/newgitrepo.git
+   31  git remote -v
+   32  git push origin master
+-------------------------------CREATING DEVELOPER BRANCH------------------------
+git branch fb -->creating a developer branch
+git branch --> to check we are in which branch
+git checkout fb -->going to fb branch
+git -am " " -->commiting from fb 
+git checkout master -->from here only need to merge the fb
+git merge fb
+git remote -v
+git push origin master
+--------------------------------CONFLICT ARREST--------------------
+from master changes happens but developer doesn't recognise it created some changes and trying to commit and merging from
+master will coflict ,for arresting conflict need merge tool.
+
+git congfig --global merge.toolvimdiff
+git config --global merge.conflictstyle diff3
+git config --global mergetool.prompt false
+git merge tool
+ctl ww to shifting
+local-->esc :diffg LO enter then :wqa (if we need this ,this cmd should done)
+RE-->  esc :diffg RE enter then :wqa
+BA-->  esc :diffg BA enter then :wqa
+for all combination-->esc :wqa!
+from master -->git merge fb
+------------------------------git rebase-----------------------
+it should be done from the fb
+git checkout fb
+git rebase master -->select wat ever we want and commit ,merge and push
+-------------------------------------------------------------

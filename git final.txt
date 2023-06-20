@@ -1,0 +1,7 @@
+git init
+git remote -v --for which repo we are staying in
+git remote remove (fetch)
+git remote add origin
+git add 
+git commit 
+git push orign master

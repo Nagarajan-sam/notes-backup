@@ -1,0 +1,22 @@
+https://www.javatpoint.com/linux-interview-questions  = linux qn
+https://www.edureka.co/blog/interview-questions/linux-interview-questions-for-beginners/ = linux qn
+https://www.emertxe.com/embedded-systems/linux-systems/ls-assignments/   = shell scripting
+https://techbeamers.com/20-shell-scripting-questions-answers/
+
+
+GIT:
+
+
+Declarative pipeline and Scripted Pipeline, in both we will have script, in Declarative Pipeline script starts with word Pipeline,
+ whereas Scripted Pipeline begins with word node.
+Declarative pipelines break down stages into individual stages that can contain multiple steps. 
+
+   Scripted pipelines use Groovy code and references to the Jenkins pipeline DSL within the stage elements without the need for steps.
+These are the key differences that allow a developer to quickly differentiate between a scripted pipeline and a declarative pipeline.
+this is the example to understand
+
+Development industry largely moved towards a declarative programming model for CI/CD pipelines.
+ because these declarative pipelines are easier to maintain and they tend to have a lower learning.
+ The declarative syntax is the best approach to use when new CI/CD workflows are built.
+
+

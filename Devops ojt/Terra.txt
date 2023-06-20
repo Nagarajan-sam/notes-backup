@@ -1,0 +1,28 @@
+terraform = is a tool for infra provisioning
+it automate and manage our infrastructure,our platform,and the service tat runs on the platform  open source and declarative.
+declarative= we should not want to explain the every steps,and also it define what end result we want.
+
+for eg:
+  we need to deply the  app means ,we need to 1st create a infra need to provison the the needed servers inthat server we deploying our container to the server using container etc etc
+To prepare infra we need
+ pvt network nw space 
+ ec2 server inst
+ install docekr and the tools
+ security neede to tat
+AFTER CREATING THE INFRA WE NEED TO DEPLOY THE APP.(THIS IS THE TOTAL WORK) 
+
+We can replicate the same infra in diff env.
+eg dev to prod.
+
+HOW TERRAFORRM CONNECT TO THE AWS PLATFORM PROVIDER?
+  it contains 2 componentw:
+    1.TF CORE
+        It contains 2 input src
+            1.TF CONFIG in order to do the job ,where user can create and config the needs
+            2.TF STATE  IT have the current state of the setup of TF
+      TFCORE get the input from both TFCONFIG AND STATE and it will plan and do the need whats to be created r updated r destoyed 
+    2.PROVIDES = AWS ,AZURE,GCP (IAAS)
+                 K8 (PAAS)
+                 Fastly(saas)
+  
+

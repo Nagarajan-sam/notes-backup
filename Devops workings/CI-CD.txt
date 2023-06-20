@@ -1,0 +1,200 @@
+                                         CI-CD 
+TOOLS USED:
+1.GIT -version control system
+2.JENKINS -integration tool
+3.MAVEN -Build tool -->it package r compress the Multi file in the format of WAR,JAR,EAR.
+   WAR-WEB APPLICATION ARCHIEVE
+   JAR-JAVA APPLICATION ARCHIEVE
+   EAR-ENTERPRISE ARCHIEVE (BUSINESS APP)
+4.DOCKER -container deployment tool
+5.TOMCAT- server (where we are gng to implement our code)
+6.SONARQUBE-code quality tool (DB is required to save our date)
+
+project explanation:
+1. i have a code in local repo commiting that to remote repo 
+2. it will trigger jenkins via webhook method
+3. jenkins will trigger maven and it will give a war file
+4. and code is being tested by the tool sonarqube and it save the data in database service(rds)
+5. after the successfull tesing of code using docker we can install the tomcat
+6. war file is going to get deployed to the tomcatserver
+7. after the deployment using that converting the docker image and using this dockerimg
+   making As a container.
+
+STEP-A
+1.Creating a ec2 linux instance with t2 medium .
+2.login to server (putty) and switch to rootuser
+3.yum install git -y
+4.install jenkins
+5.cd /opt -->(downloading all our sw r tools saving in a particular path, for remembering purpose)
+6.install maven -->using wget https://dlcdn.apache.org/maven/maven-3/3.9.2/binaries/apache-maven-3.9.2-bin.tar.gz
+7.ls -lt-->tar -xvzf file name to untar -->cd maven -->pwd(our maven is in this file)
+8.go to jinkins and set the user name and pw
+9.yum install docker -y (done inside the maven folder)-->can done anywhere
+10.service start docker  ,go back to the opt path
+11.in git (mainly focused)
+   pom.xml file-->project object model-->maven files (it will refer the pom.xml file only)
+   docker file
+   jenkins file
+1.IN OUR POM.XML WE HAVE WEP APP NAME CALLED [MYWEB] AND RUNS IN A VER OF 0.0.5 IT WILL GIVE IN WAR FORMAT.
+AND THAT WAR FILE WILL GET IN THE PATH OF [TARGET] BY DEFAULT.
+AND IN POM.XML THEY HAVE DEPENDENCIES OF OUR CODES TOOO.
+
+2.IN OUR DOCKER FILE : 
+   FROM :BASE IMAGE
+   COPY THE WAR FILE(it will be in our target path AND PASTING IN TOMCAT DEFAULT PATH  (USR/LOCAL/TOMCAT/WEBAPPS) 
+this process is called deplyment.
+
+STEP-B
+1.coming to jenkins integrating jenkins and maven.
+jenkins console-->manage jenkins-->manage plugins-->search maven-->slt maven build tools -->install without rstrt
+2.create a job ci-cd project-->click pipeline-->git-->viewing 1st 2 step of jenkinfile-->
+   1.git checkout
+   2.alias name (have to specfy and mention the alias name in jenkins then only jenkin should know)
+   3.server(cd /opt/apche -->ls -ltr -->cd bin-->./mvn package (this only we specified in script) 
+   4.not specifing the path in maven (passing maven path in env var bcz we can change at any time so declaring ${maven home}
+   5.for every build it will clean the old code ,and package and give the output
+   5. renaming the target file nd giving new name using unix cmd "mv" (why renaming means in pom.xml file my web-0.0.5 after another 
+   release it will my web-0.0.6 sooo 
+3.copy paste the script put curly braces save and run.
+specifying the maven path:
+  manage jen-->global tool config->search maven-->name=give alias name-->maven home=give maven installation path
+   save.-->build now=>all stage will get done successfully
+4.in console output ->search target -->it will show the target =>our building war file path
+  cd /var/lib/jenkins/workspace/project.cicd/target-->ls -ltr will have newapp.war
+5.cd /var/lib/jenkins/workspace-->will have all our working-->ls -lts --> our project will be there --> cd projectname
+will have all our git code here and also will have target folder in target folder will have our final output.
+
+STEP-C:
+Taking the docker code and in that file last copy and paste the deployment step:
+stage-1:building doker img -->docker build -t <image name>
+stage-2:docker login and docker push <image name>
+docker login -u <username> -p$(docker password) --for sec purpose passwd is creating as a var and pushing 
+now copy only the 2 stage and paste in pipeline and then run ,will have error bcz we didn"t give creden for dockerhub
+QN;HOW WILL HANDLE CRED IN PIPELINE:
+  managejenkins-->manage cred--> click jenkins-->click global cred-->add cred-->
+   kind=how ur setting the passwd--> secret text
+   secret=giving docker hub password
+   id=in our code we gave cred id docker pass copy paste that
+   description =our wish =description pwd
+   ok
+build now -->will have error ,y becoz means we dont have permission for this path -->copy the path and do it server change the mode
+chmod 777 paste the path.-->build now:will get output.
+stage-3:copy paste the last one and paste in pipeline save and build now
+
+STEP-C SONARQUBE:FOR CODE QUALITY AND CODE SECURITY
+PRE REQ FOR SQ:
+1.3GB RAM
+2.OPEN JDK
+3.NEED DATABASE
+4.NEED USER AND PERMISSION FOR THAT DB
+5.SHOULD NOT START THE SQ IN ROOT USER
+
+3.CREATING DB IN AWS:
+console-->rds-->create DB -->standard create --<mysql(free)->put tick in checklist(it filter only free portion)
+-->select version 5.7.26(bcz our code supports only this ver)
+-->db instance iden=mysonar-->our wish
+username=admi
+pw=admin123 -->next -->no change ,change only in-->db names=mysonar ->untick enable protection
+and create db (it will take some time)
+
+1.take t2 large  create instance
+(why creatin the 2 instance means sq need 3gb ram so for that load purpose)
+
+2.go to server: yum install java-1.8.0     
+in console db got ready how to connect the db ,need install in server
+yum install mysql -y 
+mysql -h endpoint of aws server in console -P 3306 -u admin -p
+ create user name and give used permission 
+exit
+
+STEP -D:going to sonarqube
+1.cd /opt -->wget sonarqube content in linl -->unzip sonarqube
+cd sonarqube -->cd conf will have 2 file 1,wrapper.conf 2,sonar.prop
+2.vi sonar.properties
+   username (uncommand)=admin (this is username is from db )
+   pw=admin123
+below in msqldb (uncmd) =url-->delete localhost and given endpoint of our db
+below webswevwe sonar.webhost (uncmd) for pub access
+below sonar.port(uncomd) this is default pn0
+:wq!
+3.in server--> sudo update-alternatives --config(is used to check our wer our java jdk file is installed)-->copy and paste this
+4.vi wrapper.
+ in 4th line specify the path of the java,paste here (:wq!)
+cd .. ,ls -lt --> it will be in root user -->change this to ec2-user -->chown -R ec2-user:ec2-user sonarqube (-R ->refrs all file and sub dir inside the sq)
+ls -lrt --> will be in ec2-usr
+exit--> sonarcube should not start as root user 
+cd /opt/sonarqybe-6.7.6/bin/ -->ls-ltr -->cd linux 64 -->./sonar.sh start --> it will start -->./sonar.sh sstatus
+copy the id in console followed by pno 9000 
+ 
+HOW TO CHANGE THE INSTANCE :
+CLICK THAT SERVER -->ACTION -->STOP--> AGAIN ACTION-->INSTANCE SETTING-->CHANGE INSTANCE TYPE.
+
+STEP -E: 
+after login in sonarqube :user and pw is __>admin admin r admin admin 123
+generate a token with UDN=sonar generate --> like a pw (using this pw only gona comm bw the jenkins and the sonarqube)-->cont
+3.if loss token means we can og to sq setting-->secu-->gen token ,here we can also do password change.
+
+STEP -F (INTEGRATING JENKINS AND THE SONARQUBE)
+1.generate token -->manage cred-->jenkins--.gobal cred--> secret text-->secret -->give our token--> id =sonar
+des=sonartoken 
+2.LOGIN IN TO JENKINS SERVER -->INSTALL PLUGIN -->SONARQUBE SCANNER-->
+3.NEED TO INFORM TO JENKINS TAHT WER OUR SONARQUBE IS RUNNING -->CONFIG SYTM-->CTL +F SEARCH SONAR -->ADD SONAR
+  NAME= sonar 
+  server url->give sonar url
+4.give cred and save
+
+STEP-6:
+1.add the sonarqube code into pipeline ABOVE THE DOCKER IMAGE AND BELOW THE COMPILE PPACKAGE
+2.ADD SAVE. BUILD NOW -->will get error indeployment --> because already the container is runnuing
+3.need to remove that so adding the stage of remove previous container add in pipeline below stage of docker push and give close
+bracket in last. 
+4.(after the succesfull build) now refersh the sonarqube -->if it have any error means it will list
+
+STEP-7: NEXUS (ARTIFACTORY) (ITS A REPO -->PVT STORAGE)  IT WILL UNDER OUR SECURIY 
+CLIENT REQUEST: docker image =secured machine need to place so using artofact
+PREREQ :
+3GB RAM -T2.MEDIUM
+JAVA
+download nexux ari-->unix flavour-->wget -->in cd/opt /tar -xvzf -->ls -ltr-->cd nexus-->cd bin-->ls-ltr
+-->./nexus start 
+cpy th ip followd by pno 8081:
+user name:admin
+pw:will give in above path copy paste in server followed by cat like jenkins-->paste nd sign
+-->create new pw-->
+in google nexus to store docker images
+
+go to nexus repo:(follow docu in google)
+click setting -->repo -->create repo-->docker host repo -->name =dockerpvt (udf)-->beloe--.http =8083 (tis is pvt port no)
+docker registry api support = give tick (for accecing our ec2 instance to nexus)
+2.need to install the docker engine in nexus repo -->sudo su- -->yum install docker -y  
+3.have to copy paste the daemon.json into the (our docker file nd tomcat installed server)
+go to that server and go to the path cd /etc/covker -->vi daemon.json paste the cmd)
+4.edit nd give nexus ip and portno 8083
+5.restart the daemon->sudo systemctl restart docker
+
+STEP-8:
+copy paste the nexus nd paste in pipeline: give nexus pvt artifact ip and portno :
+stage('Nexus Image Push'){
+   sh "docker login -u admin -p admin123 52.66.236.73:8083"
+   sh "docker tag saidamo/myweb:0.0.2 52.66.236.73:8083/damo:1.0.0"
+   sh 'docker push 52.66.236.73:8083/damo:1.0.0'
+   }
+build now-->after all success build
+in nexus repo
+click rubber symbol-->cclick browse-->click docer pvt-->will have that
+
+STEP-9(integration git and the jenkins) using webhook
+settings-webhooks->add webhook -->http://jenkinip/github-webhook/-->addwebhooks -->go to jenkins->general
+-->select github project-->give github url-->build trigger-->select github hook triggrt 
+-->when ever the devolper do comit means auto it will trigger jenkins pipeline.
+  
+
+
+
+
+
+
+
+
+
+

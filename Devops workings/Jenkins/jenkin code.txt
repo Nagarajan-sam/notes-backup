@@ -1,0 +1,75 @@
+1.sudo apt-get update
+2.Sudo apt-get upgrade
+3.sudo apt install openjdk-11-jdk -y
+4.openjdk version "11.0.17" 2022-10-18 -->java package 
+5.curl -fsSL https://pkg.jenkins.io/debian-stable/jenkins.io-2023.key | sudo tee \
+  /usr/share/keyrings/jenkins-keyring.asc > /dev/null
+6.echo deb [signed-by=/usr/share/keyrings/jenkins-keyring.asc] \
+  https://pkg.jenkins.io/debian-stable binary/ | sudo tee \
+  /etc/apt/sources.list.d/jenkins.list > /dev/null
+7.sudo apt update
+8.sudo apt install jenkins
+9.sudo systemctl start jenkins.service
+sudo systemctl status jenkins
+
+Gokul
+Gokuljenkins@28
+Gokulanand =ur name
+gokulgemini28@gmail.com
+
+
+wget https://dlcdn.apache.org/maven/maven-3/3.9.2/binaries/apache-maven-3.9.2-bin.tar.gz
+
+
+node{
+   stage('SCM Checkout'){
+     git 'https://github.com/Gokulgemini/hello-world.git'     
+   }
+   stage('Compile-Package'){
+
+      def mvnHome =  tool name: 'maven3', type: 'maven'   
+      sh "${mvnHome}/bin/mvn clean package"
+	  sh 'mv target/myweb*.war target/newapp.war'
+   }
+
+
+
+
+-----BEGIN OPENSSH PRIVATE KEY-----
+b3BlbnNzaC1rZXktdjEAAAAABG5vbmUAAAAEbm9uZQAAAAAAAAABAAABlwAAAAdzc2gtcn
+NhAAAAAwEAAQAAAYEArl+qKW8/e0ytTKDPoO3BM41h9Tvy9KjDpjUAzs01DmHBygnFyH6c
+g1KIe+oIp3lYhhk2lDx9XzU/JqW67kY5l97UADU78c0UNNh4AfJkg+qAIkWB/GHP0Ymdob
+2kmUgpQftGxQU+8+rzy0xBPmDB55EVaIsVO/GlRQQ2rk21ZFmzKoas/BiIsD3/s1aEazSC
+FIh6PAZ/dg+dm/yC5kBN76dwqHepOX3n/QwaDcYvqvpg/MOwiUlnzPTB8L933O7MtyzFr3
+N+o02fd3F8MZ3uYwmmYrrqSZ1LtpIzjKhAJWZTXMn8EwdrV6DPQQpB8ZAmbyaTq6aTCHsT
+IghPs+YrB6+DVLBr+QDUTTm0BjeUUex3WkBDKWzyGOKyPVFqRduCnExTuuF5g70IJK32SJ
+q/F63wYwbMuo3Vh9mAQfZi1BVxLMgjl5JdDVRR7/qB2HQamclEu24+SSpCjDXeo2huJnjs
+V4Ov2UuwLO2Soo1E5f8Oni09DEAx3jEI6NFsBnP1AAAFkB5dPiYeXT4mAAAAB3NzaC1yc2
+EAAAGBAK5fqilvP3tMrUygz6DtwTONYfU78vSow6Y1AM7NNQ5hwcoJxch+nINSiHvqCKd5
+WIYZNpQ8fV81Pyaluu5GOZfe1AA1O/HNFDTYeAHyZIPqgCJFgfxhz9GJnaG9pJlIKUH7Rs
+UFPvPq88tMQT5gweeRFWiLFTvxpUUENq5NtWRZsyqGrPwYiLA9/7NWhGs0ghSIejwGf3YP
+nZv8guZATe+ncKh3qTl95/0MGg3GL6r6YPzDsIlJZ8z0wfC/d9zuzLcsxa9zfqNNn3dxfD
+Gd7mMJpmK66kmdS7aSM4yoQCVmU1zJ/BMHa1egz0EKQfGQJm8mk6umkwh7EyIIT7PmKwev
+g1Swa/kA1E05tAY3lFHsd1pAQyls8hjisj1RakXbgpxMU7rheYO9CCSt9kiavxet8GMGzL
+qN1YfZgEH2YtQVcSzII5eSXQ1UUe/6gdh0GpnJRLtuPkkqQow13qNobiZ47FeDr9lLsCzt
+kqKNROX/Dp4tPQxAMd4xCOjRbAZz9QAAAAMBAAEAAAGAImW8q2/GlgwKI5OVYamE8yZwrG
++m/ZxM+/x4rFLOpIekMra6zVIsjbs6MTd5fY/yZoGSwqssEBvw2S7YMSipM8xBBcl6ibhq
+xAHvqnKmYV9g52HOwnqJBEyhS8adMZ+Kg/mNfFAMmxE+BlyEgkmT9pooHvdQuQJyF6s9Hi
+U2IxWOwlTOyuwMCrgwOLBYbs1s26AQfMbLXf62mI63Q7Rrq1rcXl88gprTqJc6jH0L6i55
+82Km8G4Ki+O8XkFm4643YHEjEVI1m98MxapKQEeIRhFUAIS95w9aMPj2y6c29LqJhv7tX7
+NzwBDVyc5BLrd1OD72lIKwQ78NR6rHMv6N/wpemSM5uVIstp+QBvMPHbkqGEyPDQcmxFE2
+Uwg7DrNZLhBWN68FwMcKKt1my2R9oKyTL4Hx3hIiTNPYlOpcp7M8lfDF+hBjl+c1yaFqgp
+NT0TPM+y3cy/Fxtl8MH/V17RshBabgG28m3jwzmYnAVMbU3tkcMgktuNKqGxcejmABAAAA
+wGTwyYCHeb73SR/FpQ4S8jUeJv4PTRjaYO82mMO1KKAKYshIJB2cbyW82FYXxXsOyqg8wh
+BWGqdcM7H+qtpyDKytdJvGgl18q/qVHM20pzyaFE9l29zBPl3t1plMEhftGnSWhckY3r99
+DsAhJWLnJt8HJaWVdYWNSVlLMHYrbCHmQhwse9HhG7adjSIOKUxDsDR/w/uP95TmVlD8Lk
+8v5RUQgNqf1+uW+lj9mh6PRzPtMqWsutTWlQYPI/WZD6jKTQAAAMEA3t7wafL0Z3zEUuOf
+6IfcVn2SGdTrw6HSkNE86cB6Ol6S0nagzJJD9Hqoy+Pnhm1og+P044friVjvCOJvaaGV4c
+FPr3DtdbNQmZYtLI04ZA5KFhfNL6jNnNmRX8rVbB8MTgV6gH7/eCnxTpFCPk852J10y+CV
+UbV0aQi9rrZlGpB8kG7I75PbIItZezuNDxFX0+r6pGQD2deANvV4+OYmtriMLE8z/B9yh5
+IcpOQEUSC87WmiEbZ8kZ95FMJx2JFFAAAAwQDISzqb5IWE6WXSWtos2lY3IRuJCscpNHpo
+ivK+MTn1dMbYu4H0st4hKECLP3tt0OvdjbuLa93dPvPOiG7okd6zY3nppcYvbHHI8LO2Ho
+Qmu83e9P0SrE4URhDwkHDpSuFd7g0HlnzmkZrq34Wb0GlDTEmbzNe53/nakzAGhLZlj6SW
+YawvJ731cUD+bNCWvEwwLEQXJF4K7CbuRCZRw78l6KZ9bMQOS+DdsUk0NWnMfS11jnnOtW
++OdkGdigilCvEAAAAVcm9vdEBpcC0xNzItMzEtMzQtMTY5AQIDBAUG
+-----END OPENSSH PRIVATE KEY-----

@@ -1,0 +1,35 @@
+largest number :
+1.using def fun                                                #another method by using method
+2.calling the fun name                                             print(max(list))
+3.assigning the max value of  1St index value of list
+4.for i in range list
+5.if i>max
+6.max=i
+7.return max
+---------------------------
+Finding 2nd largest:--> the programming portal(u)
+
+
+
+---------------
+to remove 2nd char of index from the string:
+1.enter the string
+2.final=""
+3.for i in range (len(string)):
+4.if (i%2==0):
+5.final+=string
+6.print(final)
+---------------------------------
+to remove nth index char from non-empty string. (utube(python programming)
+data=programming
+index=6
+n=len(data)
+new=""
+i=0
+while (i<n):
+ if (i!=index):
+   new+=data[i]
+print(new)
+------------------------------------
+
+

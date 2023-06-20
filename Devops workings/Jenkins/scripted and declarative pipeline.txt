@@ -1,0 +1,91 @@
+node
+{
+
+    stage('Commit')
+
+    {
+
+        echo "This is Code Download from GIT Project Repository.................."
+
+    }
+
+    stage('Build')
+
+    {
+
+        echo "This is Build project using maven.................."
+
+    }
+
+    stage('Test')
+
+    {
+
+        echo "This is Test project Implementation using Selenium................."
+
+    }
+
+    stage('Release')
+
+    {
+
+        echo "This is Delivery using Dcoker......................................"
+
+    }
+
+    stage('Monitor')
+
+    {
+
+        echo "This is Application Logs Monitorinig using tool Splunk............."
+
+    }
+
+}
+
+
+
+
+DEC PIPELINE:
+pipeline
+{
+agent any
+stages
+{
+ stage('Commit')
+ {
+  steps
+  {
+   echo "Source Code Download from the GITHUB to Declarative Pipeline......."
+  }
+ }
+ stage('Build')
+ {    
+  steps
+   {
+    echo "This is Build project run with maven tool ................"
+   }
+  }
+ stage('Test')
+ {
+  steps
+  {
+    echo "This is Test project run with Selenium tool ................"
+  }
+ }
+ stage('Deploy')
+ {    
+  steps
+   {
+    echo "This is Deploy project run with Docker tool ................"
+   }
+  }
+ stage('Monitor')
+ {    
+  steps
+   {
+    echo "This is Monitoring project run with Splunk tool ................"
+   }
+  }
+}
+}

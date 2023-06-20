@@ -1,0 +1,30 @@
+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
+
+
+https://www.evonence.com/blog/migrate-aws-rds-to-gcp-cloud-sql
+
+https://www.cloudskillsboost.google/focuses/17696?parent=catalog
+
+https://www.mouritech.com/2022/01/21/migrating-data-from-amazon-rds-to-cloud-sql-using-dms/
+
+
+https://w3cschoool.com/tutorial/linux-directories
+https://msys.keka.com/#/home/dashboard
+https://www.guru99.com/linux-commands-cheat-sheet.html
+https://www.tutorialspoint.com/unix/unix-what-is-shell.htm
+https://www.youtube.com/watch?v=cQepf9fY6cE&list=PLS1QulWo1RIYmaxcEqw5JhK3b-6rgdWO_
+https://www.youtube.com/playlist?list=PL7B7FA4E693D8E790
+https://www.youtube.com/watch?v=QRLpeGQ-jls&list=PLgWpUXNR_WCeWiXmsYf5HUe7E4I29zTJr
+https://towardsdatascience.com/60-questions-to-test-your-knowledge-of-python-lists-cca0ebfa0582
+https://tldp.org/LDP/abs/html/index.html
+https://theprogrammingportal.com/Python/second-largest-number-in-a-python-list
+https://www.youtube.com/watch?v=Zzd9tarN3Lg&list=PL2qzCKTbjutJRM7K_hhNyvf8sfGCLklXw
+https://www.javatpoint.com/python-if-else
+https://www.digitalocean.com/community/tutorials/how-to-install-jenkins-on-ubuntu-22-04
+https://www.youtube.com/watch?v=MRuo9zHIwuA&list=PL2qzCKTbjutLx2Ygs1GW7hbnOlt4ELc58
+https://askubuntu.com/questions/983351/how-to-install-terraform-in-ubuntu
+https://www.digitalocean.com/community/tutorials/how-to-ensure-code-quality-with-sonarqube-on-ubuntu-18-04
+
+dms migration= https://www.youtube.com/watch?v=pR7BV0fTmI0
+
+downloading the db in oracle documents =https://towardsdatascience.com/all-things-gcp-installation-of-the-oracle-database-in-vm-instance-ab35c200b7b1

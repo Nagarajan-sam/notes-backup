@@ -1,0 +1,115 @@
+we can do from development to deplyment easily 
+
+CREATING K8'S CLUSTER USING KUBEADM.
+PREREQ:
+os:ubuntu
+cpu:2
+memory:4gb
+DONE IN ALL THE MACHINE:some steps have todo in all the machine till k8 cluster creation
+cat /proc/cpuinfo | grep-i processor  =cpu info
+lsb_release -a (to see the os version)
+sudo swapoff -a (before doing kube
+free -m 
+sudo apt-get update && sudo apt-get install -y apt-transport-https curl
+sudo curl -s https://packages.cloud.google.com/apt/doc/apt-key.gpg | sudo apt-key add -
+sudo apt-add-repository "deb http://apt.kubernetes.io/ kubernetes-xenial main" (k8's official repo)
+sudo apt-get update && sudo apt-get install -y kubelet=1.20.0-00 kubeadm=1.20.0-00 kubectl=1.20.0-00 docker.io (installing all stable ver)
+sudo systemctl start docker && sudo systemctl enable docker
+
+                    A.k8's CLUSTER initialization should be done only in master machhine
+sudo kubeadm init
+ip -a (if our ethernet port has single ip means no problem,bt defaulty it will create a 1 ip only) if have many means need to assing ip add by below cmnd
+        need to specify the ip for comm)
+sudo kubeadm init --apiserver-advertise-address 192.168.2.11 --pod-network-cidr=172.16.0.0/16 (OPTIONAL)
+3.to start using cluster need to run for the following user:
+should run the cmd separately by copy paste   ==> our kubeconfig file is stored here =for accessing
+
+4.kubectl get nodes (is used to check the nodes)=>it will create a node and not ready in status
+5.now need to deploy a pod network to the cluster for communicating the pod and the node (go to the above addons pckg and in that select flannel 
+cpy the with the above kubectl apply -f with http link and paste in machine.
+6.then need to join the worker node by running the following cmd(will have api server ip and token id to join the worker node
+   paste that in a worker node to join.
+master node=mn
+worker node=wn
+mn=kubectl get nodes  (will have 3 node mn=1,wn=2)
+7.kubectl describe node NODENAME (to view the info about the node)
+
+
+                       B.K8'S RESOURCE OBJECTS AND HOW TO CREATE IT.
+FOR DEPLOYING A APP NEED SOME PARTICULAR RSRC OBJECTS FOR SOME APPS .
+k8 cluster is a env ,other than this need to create all as a object only (can be create a object using 2 ways)
+      1.yamlfile
+      2.kubectl
+THE objects contains (what img we are using,what volume ,img port,src etc...)=>app needed info 
+the objects contains specs and  status.
+
+apiVersion: version name                      |
+kind:resrc objects (what purpose we are using |             
+metadata:                                     | this four are needed one        
+  name:have to give k8 deployment,podname     |
+spec: 
+  selector:
+     matchlabels:
+        app:ngnix
+  replicas:2  #tells deployment to run 2pods matching that template
+  template:
+    metadata:
+     labels:
+        app:
+    spec:
+      containers:  -----------------------------------  #containers specification
+      -name: ngnix
+       image:ngnix:1.14.2
+       ports:
+        - containerport:80     
+
+
+cmd:
+kubectl get pods -->to see the posd
+kubectl get svc --> to see the started service
+kubectl get ingress-->to see about the ingress
+kubectl get deploy
+kubectl delete pods VALUE
+kubectl delete svc RESRC                           
+Kubtctl help  
+kubetl get svc --->by defaulty it will have the ip (cluster ip)
+
+vim ngnix-basic.yaml (paste the cmd)
+kubectl apply -f FILENAME(ngnix-basic.yaml)
+kubectl get deploy --if is down also another one will help to get up 
+kubectl get pods ---it will run with a deplymnt name
+kubectl delete pod RSRC NAME -->IT will delete the pod ,bt again it will self heal and bring the pod with diff name
+                                this is a spl thing for k8s
+[if we want to delete the pod permanently means need to delete whole deployment or go to the yaml file nd make replicas as 0.
+change the yml file and do -->kubectl apply -f FILENAME 
+kubectl get deploy -->it will show as 0
+kubectl get pods--->no it will show no rsrc found]
+
+for edit the ymlfile:
+ kubectl edit deploy DEPLYMNT NAME  --->
+               |
+              ------ NEED TO give deply or pod ...   
+ EDIT HERE REPLICAS AS 1--> save.
+kubectl get deploy---> now it will show as 1
+
+bt in yml file in wont show the edited one ,it will be still in replicas as 0.
+now if we run the kubectl apply -f FILENAME means (it will show as o replica only bcz in yml file we have only 0 replicas)
+
+4.NOW ACCEDENTLY DELETED THE YML FILE AND HOW TO RECOVER IT.
+rm -rf YML FILENAME -->deleted the yml file.
+2ways is there 
+1.kubectl edit deploy DEPLOYMENTFILENAME. (Here we can copy the neeeded one)
+2.kubectl get deploy DEPLOYMENTFILENAME -o yaml (needed in yml format) copy and paste in one vim file and edited the needed one.
+
+
+
+                      
+
+  
+
+
+
+
+
+
+

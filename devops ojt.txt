@@ -1,0 +1,97 @@
+https://drive.google.com/drive/folders/1FFQb0y0EKVpTBLo6EfV8kREdRqhcuV2j
+
+
+dev respo for prod
+ops teams res for after prod
+devops bringng the decvlr and ops team bring togeter to avoid comm ,collab
+agile- practice to follow, implements and less documents,codedelivery is faster
+agile disadvantage:communtication prblm,the feedback is not receving to the developr
+                    for delivering one project we need multiple teams helps
+devops=for delivering a projrect combinig all teams together
+5level of devops:all app need to be containarized
+                 all app need to orcestrated crtly
+                 all app has to be microservics
+                 put it into the cloud
+                 and brings into complete automated env
+
+monolithic -debugging is diff,if one service will go down entire app will go down
+n-tier arch
+micro services-entire app wont go downn.
+containers- bundle of code get packed, with dependecy oc were also in the container
+
+all app has to be in cont
+should be orchestration
+
+if any company have 5level of devops can deply a code in 1day
+devops-maintaing a stabilty pf app
+
+automation-thigs done 2 times is not a automa ,need to done in a single time itself
+leani it-takina a single part of code ,1st complete that and move on, dont ake everything 
+          in a single packet and try to fix the code,take one by one nd mvg it'
+measurement-shoul be done from the intial part od developing the code
+             speed of code ,quality of code  ,have to measure the acitivity of code 
+             every stage of sw dvlpmt need to be measure
+more than 52 kpi ,have to keep measure the activity
+measure a perfomance
+
+sharing -keeps sharing our performance
+
+benefits-reduce deploymnt time
+         we can find the bug nd we can clear the bug easilh
+         rollbacks are easy
+
+Functionality test-testing the fn of the code
+securiyt test               -trying to penerate,trying to hack our code nd test our system
+
+
+1.lean principles
+
+
+
+
+
+                              scm
+tracking our code ,collabrating a code ,it avoid 2 develp writing the code,we can maintain our code
+wrkflow auto -our code get reviewd ,
+
+scmtools:
+
+terms
+repo:parent folder/root under this will have sub folders
+ monolythic -1 repo
+ micro-multiple repo
+checkout-taking a local cpy of repo in laptop
+
+
+-----------------------------------CI--------------------------------------------------------------------
+ci is the devops practice or the process after the developer push the code in to the centralized repo
+the ci process should start it should be build,test,scan and it sholud be get ready for the deployment.
+ 
+why we need artifacts to be stored?
+ for easy compilation process we don't want to compile again n again.
+
+
+
+
+
+
+-----------------------------CD-----------------------------------------------------------------------------
+CD is the process of deploying the code,moving the code to the prod.
+cd is also called release pipeline.
+why cd?
+  after finishing of ci process continusly we need to deploy in every env ,need to deply in test dev prod..
+DEPLOYMENT STRATEGY?
+a deplymnt need to install or upgrade the app without any downtime and without disurbing the user exp
+
+DIFFICULTY FACING IN DEPLYMNT:
+Downtime,rollback ,usermight not satisfued with the new updated,performance is bad cmprng to old ver
+
+TECHNIQUE TO FOLLOW WHILE DEPLOYING:
+1.Recreate deployment strategy
+2.Blue-green deplymnt
+3.rolling update
+4.canary deplymnt
+5.a/b testing
+6.shadow deployment
+
+     

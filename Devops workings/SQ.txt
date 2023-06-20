@@ -1,0 +1,19 @@
+sudo apt install openjdk-8-jre
+sudo apt install mysql-server
+sudo systemctl start mysql.service
+
+ CREATE DATABASE sonar CHARACTER SET utf8 COLLATE utf8_general_ci;
+ CREATE USER sonar@localhost IDENTIFIED by 'sonar';
+ CREATE USER sonar@'%' IDENTIFIED by 'sonar';
+  GRANT ALL ON sonar.* TO sonar@localhost;
+  GRANT ALL ON sonar.* TO sonar@'*';
+ EXIT
+sudo wget https://binaries.sonarsource.com/Distribution/sonarqube/sonarqube-6.7.6.zip
+vi sonar prop-changes
+vi wrapper
+/usr/lib/jvm/java-8-openjdk-amd64/jre/bin/java--->javapath
+come to opt path
+
+
+
+
